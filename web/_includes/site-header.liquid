@@ -1,0 +1,20 @@
+<header class="site-header">
+  <div class="brand">
+    {% if isHome %}
+      <h1>{{ site.title }}</h1>
+    {% else %}
+      <a href="/">{{ site.title }}</a>
+    {% endif %}
+    <p class="tagline">
+      {{ site.tagline }}
+    </p>
+  </div>
+  <nav class="site-nav">
+    <a href="https://github.com/andreagarbugli" aria-label="GitHub"
+      ><i class="fa-brands fa-github"></i
+    ></a>
+    <a href="https://x.com/a_garbugli" aria-label="X"
+      ><i class="fa-brands fa-x-twitter"></i
+    ></a>
+  </nav>
+</header>

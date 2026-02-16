@@ -1,0 +1,48 @@
+<aside class="sidebar">
+  {% if variant == "post" %}
+    <div class="sidebar-block">
+      <h2 class="sidebar-title">{% if series %}Series{% else %}Posts{% endif %}</h2>
+      <ul class="sidebar-list">
+        {% if series %}
+          {% assign seriesPosts = collections.articles | getSeries: series | sortBySeriesPart %}
+          {% for item in seriesPosts %}
+            <li>
+              <a href="{{ item.url }}" {% if item.url == page.url %}aria-current="page"{% endif %}>{{ item.data.title }}</a>
+              <span class="sidebar-date">{{ item.date | readableDate }}</span>
+            </li>
+          {% endfor %}
+        {% else %}
+          {% for item in collections.articles limit: 10 %}
+            <li>
+              <a href="{{ item.url }}" {% if item.url == page.url %}aria-current="page"{% endif %}>{{ item.data.title }}</a>
+              <span class="sidebar-date">{{ item.date | readableDate }}</span>
+            </li>
+          {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+    <div class="sidebar-block">
+      <a class="sidebar-home" href="/">&larr; Back home</a>
+    </div>
+  {% else %}
+    <div class="sidebar-block">
+      <h2 class="sidebar-title">Topics</h2>
+      <ul class="sidebar-list">
+        {% for topic in collections.topics %}
+          <li><a href="/topics/{{ topic | slug }}/">{{ topic }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="sidebar-block">
+      <h2 class="sidebar-title">Latest</h2>
+      <ul class="sidebar-list">
+        {% for item in collections.articles limit: 8 %}
+          <li>
+            <a href="{{ item.url }}">{{ item.data.title }}</a>
+            <span class="sidebar-date">{{ item.date | readableDate }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</aside>

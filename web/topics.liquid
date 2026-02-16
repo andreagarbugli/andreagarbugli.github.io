@@ -1,0 +1,19 @@
+---
+layout: layout-shell.liquid
+title: Topics
+isHome: true
+pagination:
+  data: collections.topics
+  size: 1
+  alias: topic
+permalink: "topics/{{ topic | slug }}/index.html"
+---
+
+<section class="section">
+  <div class="section-head">
+    <h2>Topic</h2>
+    <p class="section-meta">{{ topic }}</p>
+  </div>
+  {% assign list = collections.articles | filterByTopic: topic %}
+  {% include "post-list.liquid" %}
+</section>

@@ -1,0 +1,46 @@
+---
+layout: layout-shell.liquid
+bodyClass: article-page
+variant: post
+isHome: false
+---
+
+<article class="full-post">
+  <header class="post-header">
+    <div class="post-meta">
+      {{ date | readableDate }}{% if updated and updated != date %}{{ updated | readableDate | prepend: " · Updated " }}{% endif %}{{ content | readingTime | prepend: " · " | append: " min read" }}
+    </div>
+    <h1>{{ title }}</h1>
+    <p class="post-intro">{{ summary }}</p>
+    <div class="post-tags">
+      {% for topic in topics %}
+        <span class="tag">{{ topic }}</span>
+      {% endfor %}
+    </div>
+  </header>
+
+  {% if series %}
+    {% assign seriesPosts = collections.articles | getSeries: series | sortBySeriesPart %}
+    <section class="series-toc">
+      <div class="series-label">Series</div>
+      <div class="series-title">{{ seriesTitle }}</div>
+      <ol class="series-list">
+        {% for item in seriesPosts %}
+          <li>
+            <a href="{{ item.url }}" {% if item.url == page.url %}aria-current="page"{% endif %}>
+              <span class="series-part">{{ item.data.seriesPart | prepend: "Part " }}</span>
+              <span class="series-item-title">{{ item.data.title }}</span>
+            </a>
+            <span class="series-date">{{ item.date | readableDate }}</span>
+          </li>
+        {% endfor %}
+      </ol>
+    </section>
+  {% endif %}
+
+  <section class="content">{{ content }}</section>
+
+  <nav class="post-nav">
+    <a href="/">&larr; Back home</a>
+  </nav>
+</article>
